@@ -1,4 +1,6 @@
-input[type="button"] {
+input[type="button"],
+button,
+input {
     display: inline-block;
     background: none;
     border: 2px solid;
@@ -17,3 +19,12 @@ input[type="button"] {
     }
   }
 
+input {
+    font-size: 14.5px;
+    
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+}

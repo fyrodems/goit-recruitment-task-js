@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../images/favicon.png">
+    <link rel="stylesheet" href="../dist/style.css">
+    <!-- <a href="https://www.flaticon.com/free-icons/research" title="research icons">Research icons created by Freepik - Flaticon</a> -->
+    <title>Martyna Fliipiak - GoIT recruitment task</title>
+</head>
+<body>
+
+    <main class="main-wrapper">
+        <div class="main-container">
+
+            <div class="title">Zadanie 2</div>
+            <span class="description" style="width: 400px; display:inline-block; margin: 10px 0;">
+                Wpisz liczbę i kliknij przycisk utwórz. <br>Stworzysz w ten sposób wybraną przez siebie liczbę boksów w różnych kolorach i rozmiarach :)
+            </span>
+            
+
+            <div id="controls">
+                <input type="number" min="0" max="100" step="1" class="js-input"/> 
+                <button type="button" data-action="create">Utwórz</button>
+                <button type="button" data-action="destroy">Usuń</button> 
+            </div>
+
+            <div id="boxes"></div>
+                
+        </div>
+    </main>
+
+    <script type="module" src="../dist/main.js" defer></script>
+</body>
+</html>
