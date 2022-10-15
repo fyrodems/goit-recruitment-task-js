@@ -1,0 +1,19 @@
+input[type="button"] {
+    display: inline-block;
+    background: none;
+    border: 2px solid;
+    font: inherit;
+    line-height: 1;
+    padding: 1em 2em;
+    color: #000;
+    transition: 0.25s;
+    border-radius: 4px;
+    cursor: pointer;
+
+    &:hover,
+    &:focus {
+    box-shadow: 0 0.5em 0.5em -0.4em #000;
+    transform: translateY(-0.25em);
+    }
+  }
+
