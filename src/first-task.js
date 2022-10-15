@@ -18,19 +18,21 @@ class StringBuilder {
     this.value = str + this.value + str;
     return this;
   };
-  
+
   const builder = new StringBuilder(".");
   builder.append("^").prepend("^").pad("=");
-  
-  console.log(builder);
 
 //add result to dom
+const resultButton = document.querySelector('#result');
 
-document.querySelector('#result').addEventListener('click', () => {
+const addResultTodDOM = () => {
     const resultDiv = document.createElement('div');
     resultDiv.textContent = builder.value;
-    resultDiv.classList = 'task1-result'
-    resultDiv.style = "margin:30px; font-size: 20px;"
-
+    resultDiv.style = "margin:30px 0; font-size: 24px;"
     document.querySelector('.main-container').appendChild(resultDiv);
-})
+}
+
+if (resultButton) {
+    console.log(builder);
+    resultButton.addEventListener('click', addResultTodDOM)
+}
