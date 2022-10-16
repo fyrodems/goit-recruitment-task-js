@@ -1,3 +1,5 @@
+import { getImgData, getItem } from "./functions";
+
 //prepare html form
 const mainContainer = document.querySelector('.main-container.task-3')
 
@@ -19,48 +21,15 @@ form.append(input);
 const list = document.createElement("ul");
 list.style = "list-style: none; width: 800px; margin: 0 auto; padding-top: 46px;";
 
-// =item wrapper
-const getItem = (imgSmallUrl, imgLargeUrl, imgDescr) => {
-
-  const item = document.createElement("li");
-
-  const link = document.createElement("a");
-  link.href = `${imgLargeUrl}`;
-  link.style = "pointer-events: none;";
-  item.append(link);
-
-  const img = document.createElement('img');
-  img.src = `${imgSmallUrl}`;
-  img.alt = `${imgDescr}`;
-  img.dataset.src = `${imgLargeUrl}`;
-  link.append(img);
-
-  return item;
-};
-
-const getImgData = (data) => {
-  const imgData = [...data].map((el) => ({
-    smallImg: el.webformatURL,
-    largeImg: el.largeImageURL,
-    descr: `${el.type} ${
-      [...el.tags.split(",")].find((el) => el.split(" ").length > 1)
-        ? [...el.tags.split(",")].find((el) => el.split(" ").length > 1).trim()
-        : el.tags.split(",")[0].trim()
-    }`,
-  }));
-
-  return imgData;
-};
-
 // api call
-const URL = "https://pixabay.com/api/?key=13965574-3ae6669f35304ffc6cddc1b72";
+const URL = "https://pixabay.com/api/?key=30641011-b4fcfbf76d2c7e5799e38980b";
 
 let query = "";
 let page = 0;
 let per_page = 20;
-let node;
+let img;
 
-const fetchPictureList = (query, page, per_page) => {
+const getImgs = (query, page, per_page) => {
   if (query) {
     fetch(`${URL}&q=${query}&page=${page}&per_page=${per_page}`)
       .then((res) => res.json())
@@ -75,23 +44,22 @@ const fetchPictureList = (query, page, per_page) => {
         });
       })
       .then(() => {
-        node = document.querySelector("li:last-child img");
-        node.onload = () => {
-          handlerAutoScroll();
+        img = document.querySelector("li:last-child img");
+        img.onload = () => {
+          autoScroll();
         };
         handlerModalLargeImg();
       })
-      .catch((err) =>
-        mainContainer.insertAdjacentHTML(
-          "beforeend",
-          `<p id="err">${err}... Try again</p>`
-        )
-      );
+      .catch((err) => {
+        console.log(err);
+        mainContainer.insertAdjacentHTML('beforeend', `<span>Something is wrong... Try again</span>`);
+      }
+    );
   }
 };
 
 // listners
-const handlerSubmit = (e) => {
+const submitAction = (e) => {
   e.preventDefault();
 
   const errEl = document.querySelector("#err");
@@ -104,24 +72,24 @@ const handlerSubmit = (e) => {
     list.innerHTML = "";
   }
 
-  fetchPictureList(query, page, per_page);
+  getImgs(query, page, per_page);
 };
 
-const handlerAutoScroll = () => {
+const autoScroll = () => {
   const options = {
     root: null,
-    rootMargin: "0px ",
+    rootMargin: "0%",
     threshold: 0.1,
   };
 
-  const target = node;
+  const target = img;
 
   const callback = (entries, observer) => {
-    entries.forEach((entry, arr) => {
+    entries.forEach((entry) => {
       if (entry.isIntersecting) {
         observer.unobserve(entry.target);
         page++;
-        fetchPictureList(query, page, per_page);
+        getImgs(query, page, per_page);
       }
     });
   };
@@ -143,4 +111,4 @@ const handlerModalLargeImg = () => {
   }
 };
 
-form.addEventListener("submit", handlerSubmit);
+form.addEventListener("submit", submitAction);
